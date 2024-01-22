@@ -2,6 +2,7 @@ package com.vittorfraga.estacionamentoapi.usecases.establishment;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentRepository;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.establishment.NegativeSlotException;
 import com.vittorfraga.estacionamentoapi.usecases.UseCase;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.UpdateEstablishmentRequest;
 import org.springframework.stereotype.Component;
@@ -39,11 +40,11 @@ public class UpdateEstablishmentUseCase extends UseCase<UpdateEstablishmentReque
     @Override
     public Establishment execute(UpdateEstablishmentRequest input) {
         if (input.motorcycleSlots() < 0) {
-            throw new IllegalArgumentException("motorcycleSlots must be non-negative");
+            throw new NegativeSlotException("motorcycleSlots");
         }
 
         if (input.carSlots() < 0) {
-            throw new IllegalArgumentException("carSlots must be non-negative");
+            throw new NegativeSlotException("carSlots");
         }
 
         final var actualEstablishment = this.getEstablishmentByIdUseCase.execute(input.id());

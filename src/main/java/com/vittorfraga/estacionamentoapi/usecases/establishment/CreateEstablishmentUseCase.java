@@ -45,12 +45,12 @@ public class CreateEstablishmentUseCase extends UseCase<EstablishmentRequest, Es
         }
 
         Establishment establishment = new Establishment(
-                Objects.requireNonNull(anInput.name(), "name should not be null"),
-                Objects.requireNonNull(anInput.cnpj(), "cnpj should not be null"),
-                Objects.requireNonNull(anInput.address(), "address should not be null"),
-                Objects.requireNonNull(anInput.phone(), "phone should not be null"),
-                Objects.requireNonNull(anInput.motorcycleSlots(), "motorcycleSlots should not be null"),
-                Objects.requireNonNull(anInput.carSlots(), "carSlots should not be null")
+                anInput.name(),
+                anInput.cnpj(),
+                anInput.address(),
+                anInput.phone(),
+                anInput.motorcycleSlots(),
+                anInput.carSlots()
         );
 
 

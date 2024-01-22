@@ -2,14 +2,11 @@ package com.vittorfraga.estacionamentoapi.domain.vehicle;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_vehicle")
@@ -23,5 +20,13 @@ public class Vehicle {
     private String color;
     private String licensePlate;
     private VehicleType type;
+
+    public Vehicle(String brand, String model, String color, String licensePlate, VehicleType type) {
+        this.brand = brand;
+        this.model = model;
+        this.color = color;
+        this.licensePlate = licensePlate;
+        this.type = type;
+    }
 
 }

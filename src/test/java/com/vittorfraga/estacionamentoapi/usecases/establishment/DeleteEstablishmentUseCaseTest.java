@@ -3,6 +3,7 @@ package com.vittorfraga.estacionamentoapi.usecases.establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,11 @@ public class DeleteEstablishmentUseCaseTest {
 
     @Autowired
     private DeleteEstablishmentUseCase useCase;
+
+    @BeforeEach
+    void setUp() {
+        this.repository.deleteAll();
+    }
 
     @Test
     void givenAValidId_whenCallsDeleteEstablishmentUseCase_thenShouldDeleteEstablishment() {

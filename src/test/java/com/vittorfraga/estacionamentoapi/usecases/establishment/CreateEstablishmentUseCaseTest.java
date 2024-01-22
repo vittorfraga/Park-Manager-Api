@@ -1,6 +1,7 @@
 package com.vittorfraga.estacionamentoapi.usecases.establishment;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentRepository;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.NullFieldException;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.EstablishmentRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -71,7 +72,7 @@ class CreateEstablishmentUseCaseTest {
                 expectedMotorcycleSlots,
                 expectedCarSlots);
 
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(NullFieldException.class, () -> {
             useCase.execute(request);
         });
     }

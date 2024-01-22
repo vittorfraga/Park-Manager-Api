@@ -12,4 +12,5 @@ public record EstablishmentRequest(
         @NotNull(message = "motorcycleSlots can not be null") @PositiveOrZero(message = "motorcycleSlots must be positive") Integer motorcycleSlots,
         @NotNull(message = "carSlots can not be null") @PositiveOrZero(message = "carSlots must be positive") Integer carSlots
 ) {
+    
 }
