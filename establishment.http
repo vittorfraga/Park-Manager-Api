@@ -1,0 +1,38 @@
+@base_url = http://localhost:8080/establishments
+
+### CREATE A NEW ESTABLISHMENT
+POST {{base_url}}
+Content-Type: application/json
+
+{
+  "name": "some name",
+  "cnpj": "12345678901234",
+  "phone": "511234567890",
+  "address": "Rua dos Alfeneiros, 4",
+  "motorcycleSlots": 20,
+  "carSlots": 0
+}
+
+### GET AN ESTABLISHMENT BY ID
+GET {{base_url}}/1
+
+
+### GET ALL ESTABLISHMENTS
+GET {{base_url}}
+
+### UPDATE AN ESTABLISHMENT
+PUT {{base_url}}/1
+Content-Type: application/json
+
+{
+  "name": "name updated",
+  "cnpj": "12345678901234",
+  "phone": "511234567890",
+  "address": "Rua dos Alfeneiros, 4",
+  "motorcycleSlots": 20,
+  "carSlots": 10
+}
+
+### DELETE AN ESTABLISHMENT
+DELETE {{base_url}}/1
+```
