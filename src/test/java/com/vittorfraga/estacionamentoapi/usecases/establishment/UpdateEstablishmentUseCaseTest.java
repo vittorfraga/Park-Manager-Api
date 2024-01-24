@@ -13,7 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @ActiveProfiles("test")
 public class UpdateEstablishmentUseCaseTest {
-    
+
     @Autowired
     private EstablishmentRepository repository;
 
@@ -100,7 +100,6 @@ public class UpdateEstablishmentUseCaseTest {
         final var expectedCarSlots = 20;
         final var expectedErrorMessage = "address should not be null";
 
-        //create an instance of Establishment
         final var anEstablishment = new Establishment(
                 "name",
                 "12345678901233",

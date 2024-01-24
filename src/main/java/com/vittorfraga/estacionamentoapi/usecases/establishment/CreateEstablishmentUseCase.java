@@ -36,14 +36,6 @@ public class CreateEstablishmentUseCase extends UseCase<EstablishmentRequest, Es
     @Override
     public Establishment execute(EstablishmentRequest anInput) {
 
-        if (anInput.motorcycleSlots() < 0) {
-            throw new IllegalArgumentException("motorcycleSlots must be non-negative");
-        }
-
-        if (anInput.carSlots() < 0) {
-            throw new IllegalArgumentException("carSlots must be non-negative");
-        }
-
         Establishment establishment = new Establishment(
                 anInput.name(),
                 anInput.cnpj(),
@@ -53,7 +45,7 @@ public class CreateEstablishmentUseCase extends UseCase<EstablishmentRequest, Es
                 anInput.carSlots()
         );
 
-
+        
         return this.repository.save(establishment);
     }
 }

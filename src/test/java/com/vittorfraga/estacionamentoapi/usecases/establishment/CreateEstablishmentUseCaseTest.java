@@ -2,6 +2,7 @@ package com.vittorfraga.estacionamentoapi.usecases.establishment;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentRepository;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.NullFieldException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.establishment.NegativeSlotException;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.EstablishmentRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -85,7 +86,7 @@ class CreateEstablishmentUseCaseTest {
         final var expectedPhone = "123456789";
         final var expectedMotorcycleSlots = -10;
         final var expectedCarSlots = 20;
-        final var expectedErrorMessage = "motorcycleSlots must be non-negative";
+        final var expectedErrorMessage = "motorcycleSlots should not be negative";
 
 
         EstablishmentRequest request = new EstablishmentRequest(
@@ -96,7 +97,7 @@ class CreateEstablishmentUseCaseTest {
                 expectedMotorcycleSlots,
                 expectedCarSlots);
 
-        final var expection = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        final var expection = Assertions.assertThrows(NegativeSlotException.class, () -> {
             useCase.execute(request);
         });
 

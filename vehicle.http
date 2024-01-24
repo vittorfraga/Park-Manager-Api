@@ -1,0 +1,22 @@
+@base_url = http://localhost:8080/vehicles
+
+### 1. Create a new vehicle
+POST {{base_url}}
+Content-Type: application/json
+
+{
+  "brand": "Honda",
+  "model": "Civic",
+  "licensePlate": "AAAA444",
+  "color": "red",
+  "type": "MOTORCYCLE"
+}
+
+### 2. Get all vehicles
+GET {{base_url}}
+
+### 3. Get vehicle by licensePlate
+GET {{base_url}}/ABC1235
+
+### 4. Delete vehicle by id
+DELETE {{base_url}}/1

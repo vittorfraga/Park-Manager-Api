@@ -2,6 +2,8 @@ package com.vittorfraga.estacionamentoapi.http.handler;
 
 import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.ResourceNotFoundException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.vehicle.DuplicateLicensePlateException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.vehicle.LicensePlateNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -40,6 +42,32 @@ public class ExceptionHandlerAdvice {
     public ResponseEntity<Map<String, String>> handleDomainException(DomainException ex) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(DuplicateLicensePlateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleDuplicateLicensePlateException(DuplicateLicensePlateException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(LicensePlateNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Map<String, String>> handleLicensePlateNotFoundException(LicensePlateNotFoundException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleNullPointerException(NullPointerException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }
