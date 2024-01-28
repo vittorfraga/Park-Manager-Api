@@ -4,13 +4,18 @@ public enum VehicleType {
     CAR, MOTORCYCLE;
 
     public static VehicleType fromString(String type) {
-        switch (type.toLowerCase()) {
-            case "car":
-                return CAR;
-            case "motorcycle":
-                return MOTORCYCLE;
-            default:
-                throw new IllegalArgumentException("Invalid vehicle type: " + type);
-        }
+        return switch (type.toLowerCase()) {
+            case "car" -> CAR;
+            case "motorcycle" -> MOTORCYCLE;
+            default -> throw new IllegalArgumentException("Invalid vehicle type: " + type);
+        };
+    }
+
+    public static String toString(VehicleType type) {
+        return switch (type) {
+            case CAR -> "car";
+            case MOTORCYCLE -> "motorcycle";
+            default -> throw new IllegalArgumentException("Invalid vehicle type: " + type);
+        };
     }
 }

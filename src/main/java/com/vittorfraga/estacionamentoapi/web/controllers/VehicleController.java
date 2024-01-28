@@ -1,10 +1,10 @@
-package com.vittorfraga.estacionamentoapi.http.controllers;
+package com.vittorfraga.estacionamentoapi.web.controllers;
 
 import com.vittorfraga.estacionamentoapi.domain.vehicle.Vehicle;
-import com.vittorfraga.estacionamentoapi.http.VehicleAPI;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.*;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.dto.UpdateVehicleRequest;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.dto.VehicleRequest;
+import com.vittorfraga.estacionamentoapi.web.VehicleAPI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,6 @@ import java.util.Objects;
 public class VehicleController implements VehicleAPI {
 
     private final CreateVehicleUseCase createVehicleUseCase;
-    private final GetVehicleByIdUseCase getVehicleByIdUseCase;
     private final ListVehiclesUseCase listVehiclesUseCase;
     private final UpdateVehicleUseCase updateVehicleUseCase;
     private final DeleteVehicleUseCase deleteVehicleUseCase;
@@ -27,7 +26,6 @@ public class VehicleController implements VehicleAPI {
 
     public VehicleController(CreateVehicleUseCase createVehicleUseCase, GetVehicleByIdUseCase getVehicleByIdUseCase, ListVehiclesUseCase listVehiclesUseCase, UpdateVehicleUseCase updateVehicleUseCase, DeleteVehicleUseCase deleteVehicleUseCase, GetVehicleByLicensePlateUseCase getVehicleByLicensePlateUseCase) {
         this.createVehicleUseCase = Objects.requireNonNull(createVehicleUseCase);
-        this.getVehicleByIdUseCase = Objects.requireNonNull(getVehicleByIdUseCase);
         this.listVehiclesUseCase = Objects.requireNonNull(listVehiclesUseCase);
         this.updateVehicleUseCase = Objects.requireNonNull(updateVehicleUseCase);
         this.deleteVehicleUseCase = Objects.requireNonNull(deleteVehicleUseCase);
@@ -36,8 +34,6 @@ public class VehicleController implements VehicleAPI {
 
     @Override
     public ResponseEntity<Vehicle> createVehicle(VehicleRequest input) {
-        System.out.println(" no controller-------licensePlate: " + input.licensePlate());
-        System.out.println(" no controller-------color: " + input.color());
         final var vehicleCreated = this.createVehicleUseCase.execute(input);
         return ResponseEntity.status(HttpStatus.CREATED).body(vehicleCreated);
     }

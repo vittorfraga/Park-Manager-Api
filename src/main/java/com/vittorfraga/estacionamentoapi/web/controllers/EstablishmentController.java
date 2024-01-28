@@ -1,10 +1,10 @@
-package com.vittorfraga.estacionamentoapi.http.controllers;
+package com.vittorfraga.estacionamentoapi.web.controllers;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
-import com.vittorfraga.estacionamentoapi.http.EstablishmentAPI;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.*;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.EstablishmentRequest;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.UpdateEstablishmentRequest;
+import com.vittorfraga.estacionamentoapi.web.EstablishmentAPI;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;

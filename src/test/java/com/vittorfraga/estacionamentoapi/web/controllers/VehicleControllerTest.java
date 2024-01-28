@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.http.controllers;
+package com.vittorfraga.estacionamentoapi.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.dto.VehicleRequest;
