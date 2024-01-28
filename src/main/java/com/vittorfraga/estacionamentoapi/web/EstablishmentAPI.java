@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.http;
+package com.vittorfraga.estacionamentoapi.web;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.EstablishmentRequest;
@@ -22,6 +22,8 @@ public interface EstablishmentAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Establishment created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "'slotName' should not be negative"),
+            @ApiResponse(responseCode = "400", description = "'cnpj' must be 14 characters"),
     })
     ResponseEntity<Establishment> createEstablishment(@Valid @RequestBody EstablishmentRequest input);
 
@@ -46,7 +48,8 @@ public interface EstablishmentAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Establishment updated"),
             @ApiResponse(responseCode = "404", description = "Establishment not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "'slotName' should not be negative"),
+            @ApiResponse(responseCode = "400", description = "'cnpj' must be 14 characters"),
     })
     ResponseEntity<Establishment> updateEstablishmentById(@PathVariable Long id, @Valid @RequestBody EstablishmentRequest input);
 

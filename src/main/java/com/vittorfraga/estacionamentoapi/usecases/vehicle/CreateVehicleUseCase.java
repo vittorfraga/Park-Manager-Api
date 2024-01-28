@@ -29,9 +29,7 @@ public class CreateVehicleUseCase extends UseCase<VehicleRequest, Vehicle> {
                 anInput.color(),
                 VehicleType.fromString(anInput.type())
         );
-
-        System.out.println(" no use case-------licensePlate: " + vehicle.getLicensePlate());
-        System.out.println(" no use case-------color: " + vehicle.getColor());
+        
 
         Optional<Vehicle> licensePlateExists = this.repository.findByLicensePlate(vehicle.getLicensePlate());
 

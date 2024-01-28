@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.http;
+package com.vittorfraga.estacionamentoapi.web;
 
 import com.vittorfraga.estacionamentoapi.domain.vehicle.Vehicle;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.dto.UpdateVehicleRequest;
@@ -22,6 +22,9 @@ public interface VehicleAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Vehicle created"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "License plate already exists"),
+            @ApiResponse(responseCode = "400", description = "'fieldName' can not be null"),
+
     })
     ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody VehicleRequest input);
 
@@ -31,12 +34,12 @@ public interface VehicleAPI {
             @ApiResponse(responseCode = "200", description = "Vehicles listed"),
     })
     ResponseEntity<Page<Vehicle>> listVehicles(Pageable pageable);
-    
+
     @GetMapping("/{licensePlate}")
     @Operation(summary = "Get an vehicle by licence plate")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vehicle found"),
-            @ApiResponse(responseCode = "404", description = "Vehicle not found"),
+            @ApiResponse(responseCode = "404", description = "Licenseplate not found"),
     })
     ResponseEntity<Vehicle> getVehicleByLicensePlate(@PathVariable String licensePlate);
 
@@ -46,7 +49,8 @@ public interface VehicleAPI {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Vehicle updated"),
             @ApiResponse(responseCode = "404", description = "Vehicle not found"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
+            @ApiResponse(responseCode = "400", description = "'fieldName' can not be null"),
+            @ApiResponse(responseCode = "400", description = "License plate already exists"),
     })
     ResponseEntity<Vehicle> updateVehicle(@PathVariable Long id, @Valid @RequestBody UpdateVehicleRequest input);
 

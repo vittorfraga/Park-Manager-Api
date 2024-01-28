@@ -1,13 +1,17 @@
-package com.vittorfraga.estacionamentoapi.http.handler;
+package com.vittorfraga.estacionamentoapi.web.handler;
 
 import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.ResourceNotFoundException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.parkingaccess.NoAvailableSlotsException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.parkingaccess.VehicleMustEnterException;
+import com.vittorfraga.estacionamentoapi.domain.exceptions.parkingaccess.VehicleMustExitException;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.vehicle.DuplicateLicensePlateException;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.vehicle.LicensePlateNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +31,16 @@ public class ExceptionHandlerAdvice {
             errors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleMissingParameter(MissingServletRequestParameterException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", "Missing parameter");
+        errorResponse.put("message", ex.getParameterName() + " cannot be null or empty");
+
+        return ResponseEntity.badRequest().body(errorResponse);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -68,6 +82,30 @@ public class ExceptionHandlerAdvice {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("message", ex.getMessage());
 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(NoAvailableSlotsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleNoAvailableSlotsException(NoAvailableSlotsException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(VehicleMustEnterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleVehicleMustEnterException(VehicleMustEnterException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(VehicleMustExitException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleVehicleMustExitException(VehicleMustExitException ex) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }

@@ -1,0 +1,14 @@
+
+@baseUrl = http://localhost:8080/establishments/reports
+
+
+### 1 - resumo de entradas e saidas de um estacionamento em um dia
+
+GET {{baseUrl}}/summary?establishmentId=18&date=25-01-24
+Accept: application/json
+
+
+### 2 - resumo de entradas e saidas de um estacionamento por hora
+
+GET {{baseUrl}}/detailed?establishmentId=18&date=25-01-24
+Content-Type: application/json

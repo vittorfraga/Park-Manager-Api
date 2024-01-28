@@ -5,17 +5,16 @@ POST {{base_url}}
 Content-Type: application/json
 
 {
-  "name": "some name",
+  "name": "novo",
   "cnpj": "12345678901234",
   "phone": "511234567890",
   "address": "Rua dos Alfeneiros, 4",
-  "motorcycleSlots": 20,
-  "carSlots": 0
+  "motorcycleSlots": 2,
+  "carSlots": 3
 }
 
 ### GET AN ESTABLISHMENT BY ID
-GET {{base_url}}/1
-
+GET {{base_url}}/18
 
 ### GET ALL ESTABLISHMENTS
 GET {{base_url}}

@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:8080/access
+@lisencePlateMotorcycle = "AAAA444"
+@lisencePlateCar = "ABC1235"
+
+
+### entry
+POST {{baseUrl}}/entry
+Content-Type: application/json
+
+{
+  "establishmentId": 18,
+  "licensePlate": {{lisencePlateCar}}
+}
+
+### exit
+POST {{baseUrl}}/exit
+Content-Type: application/json
+
+{
+  "establishmentId": 18,
+  "licensePlate": {{lisencePlateCar}}
+}
