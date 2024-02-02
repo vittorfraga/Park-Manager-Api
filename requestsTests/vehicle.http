@@ -1,5 +1,5 @@
-@base_url = http://localhost:8080/vehicles
-
+@base_url = http://localhost:8081/vehicles
+@token = eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoicGVkcm8iLCJleHAiOjE3MDY4NzM1MjcsImlhdCI6MTcwNjgzNzUyNywic2NvcGUiOiIifQ.AVokUr4K4u58yuInc5pWR3JHa3JjamN97771OiLQXX4DamUZOIHeBdSq3CoNEj1YcAQ8XlHrvQb_SAHKACN5kcLX84-phXcFpikvvAXH1NA0-WZXJQzELRFUYzvHPcIsF6b9SLT8fANNNqk7c-Y3XmsBsqtv_1ftgvXjRYpiSoOAGv56mj9fZ2IrfUE5ykQkcMiooaBXrDk6yuBHBVfTOG7_8LD3WhoAHcmQN3xtvAjjFkCRhqQliptdoNgjVTQIB3m_n5mvToxRsUdq0AnnboZvzM18NEG22WNUwxlFFQAKDbhxpcy4dVlLHYoMq6dcI0Rsux3BXirA1cM_J_GJlw
 ### 1. Create a new vehicle
 POST {{base_url}}
 Content-Type: application/json
@@ -7,16 +7,18 @@ Content-Type: application/json
 {
   "brand": "Honda",
   "model": "Civic",
-  "licensePlate": "AAAA444",
+  "licensePlate": "E AA333",
   "color": "red",
   "type": "MOTORCYCLE"
 }
 
 ### 2. Get all vehicles
 GET {{base_url}}
+Authorization: Bearer {{token}}
 
 ### 3. Get vehicle by licensePlate
-GET {{base_url}}/ABC1235
+GET {{base_url}}/AAAA333
+Authorization: Bearer {{token}}
 
 ### 4. Delete vehicle by id
 DELETE {{base_url}}/1

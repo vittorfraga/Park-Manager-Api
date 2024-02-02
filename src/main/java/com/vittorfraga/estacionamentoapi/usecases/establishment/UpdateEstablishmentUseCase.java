@@ -9,34 +9,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-/**
- * Use case for updating an existing Establishment.
- */
 @Component
 public class UpdateEstablishmentUseCase extends UseCase<UpdateEstablishmentRequest, Establishment> {
 
     private final EstablishmentRepository repository;
     private final GetEstablishmentByIdUseCase getEstablishmentByIdUseCase;
 
-    /**
-     * Constructs an UpdateEstablishmentUseCase.
-     *
-     * @param repository                  The repository for establishments.
-     * @param getEstablishmentByIdUseCase The use case for retrieving an establishment by ID.
-     */
+
     public UpdateEstablishmentUseCase(EstablishmentRepository repository, GetEstablishmentByIdUseCase getEstablishmentByIdUseCase) {
         this.repository = Objects.requireNonNull(repository);
         this.getEstablishmentByIdUseCase = Objects.requireNonNull(getEstablishmentByIdUseCase);
     }
 
-    /**
-     * Executes the use case to update an existing establishment.
-     *
-     * @param input The input containing details for updating the establishment.
-     * @return The updated establishment.
-     * @throws IllegalArgumentException If motorcycleSlots or carSlots are negative.
-     * @throws NullPointerException     If any of the input fields (name, cnpj, address, phone) is null.
-     */
+
     @Override
     public Establishment execute(UpdateEstablishmentRequest input) {
         if (input.motorcycleSlots() < 0) {

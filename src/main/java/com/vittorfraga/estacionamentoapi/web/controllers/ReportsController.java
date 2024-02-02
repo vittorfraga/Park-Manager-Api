@@ -2,8 +2,8 @@ package com.vittorfraga.estacionamentoapi.web.controllers;
 
 // ReportsController.java
 
-import com.vittorfraga.estacionamentoapi.reports.DetailedReport;
-import com.vittorfraga.estacionamentoapi.reports.ReportsSummary;
+import com.vittorfraga.estacionamentoapi.domain.reports.DetailedReport;
+import com.vittorfraga.estacionamentoapi.domain.reports.ReportsSummary;
 import com.vittorfraga.estacionamentoapi.usecases.reports.GetDailySummaryUseCase;
 import com.vittorfraga.estacionamentoapi.usecases.reports.GetHourlySummaryDetailsUseCase;
 import com.vittorfraga.estacionamentoapi.usecases.reports.dto.ReportsRequest;

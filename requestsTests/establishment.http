@@ -1,20 +1,20 @@
-@base_url = http://localhost:8080/establishments
+@base_url = http://localhost:8081/establishments
 
 ### CREATE A NEW ESTABLISHMENT
 POST {{base_url}}
 Content-Type: application/json
 
 {
-  "name": "novo",
+  "name": "estabelecimento",
   "cnpj": "12345678901234",
   "phone": "511234567890",
   "address": "Rua dos Alfeneiros, 4",
   "motorcycleSlots": 2,
-  "carSlots": 3
+  "carSlots": 2
 }
 
 ### GET AN ESTABLISHMENT BY ID
-GET {{base_url}}/18
+GET {{base_url}}/19
 
 ### GET ALL ESTABLISHMENTS
 GET {{base_url}}
@@ -34,4 +34,3 @@ Content-Type: application/json
 
 ### DELETE AN ESTABLISHMENT
 DELETE {{base_url}}/1
-```

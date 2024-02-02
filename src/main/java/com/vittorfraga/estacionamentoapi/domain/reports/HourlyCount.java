@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.reports;
+package com.vittorfraga.estacionamentoapi.domain.reports;
 
 import lombok.Getter;
 import lombok.Setter;

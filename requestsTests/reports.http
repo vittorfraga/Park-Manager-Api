@@ -1,14 +1,17 @@
 
-@baseUrl = http://localhost:8080/establishments/reports
-
+@baseUrl = http://localhost:8081/establishments/reports
+@token = eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoicGVkcm8iLCJleHAiOjE3MDY4NzM1MjcsImlhdCI6MTcwNjgzNzUyNywic2NvcGUiOiIifQ.AVokUr4K4u58yuInc5pWR3JHa3JjamN97771OiLQXX4DamUZOIHeBdSq3CoNEj1YcAQ8XlHrvQb_SAHKACN5kcLX84-phXcFpikvvAXH1NA0-WZXJQzELRFUYzvHPcIsF6b9SLT8fANNNqk7c-Y3XmsBsqtv_1ftgvXjRYpiSoOAGv56mj9fZ2IrfUE5ykQkcMiooaBXrDk6yuBHBVfTOG7_8LD3WhoAHcmQN3xtvAjjFkCRhqQliptdoNgjVTQIB3m_n5mvToxRsUdq0AnnboZvzM18NEG22WNUwxlFFQAKDbhxpcy4dVlLHYoMq6dcI0Rsux3BXirA1cM_J_GJlw
 
 ### 1 - resumo de entradas e saidas de um estacionamento em um dia
 
-GET {{baseUrl}}/summary?establishmentId=18&date=25-01-24
-Accept: application/json
+GET {{baseUrl}}/summary?establishmentId=19&date=28-01-24
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 
 ### 2 - resumo de entradas e saidas de um estacionamento por hora
 
-GET {{baseUrl}}/detailed?establishmentId=18&date=25-01-24
+GET {{baseUrl}}/detailed?establishmentId=19&date=28-01-24
 Content-Type: application/json
+Authorization: Bearer {{token}}

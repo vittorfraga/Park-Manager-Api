@@ -1,9 +1,9 @@
 package com.vittorfraga.estacionamentoapi.usecases.reports;
 
 import com.vittorfraga.estacionamentoapi.domain.parkingaccess.VehicleEventType;
-import com.vittorfraga.estacionamentoapi.reports.DailyReport;
-import com.vittorfraga.estacionamentoapi.reports.ReportsQueryRepository;
-import com.vittorfraga.estacionamentoapi.reports.ReportsSummary;
+import com.vittorfraga.estacionamentoapi.domain.reports.DailyReport;
+import com.vittorfraga.estacionamentoapi.domain.reports.ReportsQueryRepository;
+import com.vittorfraga.estacionamentoapi.domain.reports.ReportsSummary;
 import com.vittorfraga.estacionamentoapi.usecases.UseCase;
 import com.vittorfraga.estacionamentoapi.usecases.reports.dto.ReportsRequest;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ public class GetDailySummaryUseCase extends UseCase<ReportsRequest, ReportsSumma
         int totalEntries = repository.countByEventTypeAndDay(request.establishmentId(), day, VehicleEventType.ENTRY);
         int totalExits = repository.countByEventTypeAndDay(request.establishmentId(), day, VehicleEventType.EXIT);
 
-        String description = "Listing the total of entries and exits for the day";
+        String description = "Listing the total of entries and exits for the date";
         String formattedDate = day.format(DateTimeFormatter.ofPattern("dd/MM/yy"));
         DailyReport reports = new DailyReport(totalEntries, totalExits);
 

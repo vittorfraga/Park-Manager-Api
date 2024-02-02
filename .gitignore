@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+certs/private-key.pem
+certs/private-keyy.pem
+certs/public-key.pem
+certs
