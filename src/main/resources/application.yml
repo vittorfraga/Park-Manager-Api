@@ -9,6 +9,33 @@ spring:
       ddl-auto: update
     show-sql: true
 
-flyway:
-  locations: classpath:db/migration
+  flyway:
+    locations: classpath:db/migration
 
+
+springdoc:
+  enable-spring-security: false
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
+
+server:
+  port: 8081
+  tomcat:
+    accesslog:
+      enabled: true
+      directory: logs
+      file-date-format: dd-MM-yyyy
+      prefix: access_log
+      suffix: .log
+
+rsa:
+  private-key: classpath:certs/private-keyy.pem
+  public-key: classpath:certs/public-key.pem
+
+logging:
+  level:
+    org:
+      springframework: INFO

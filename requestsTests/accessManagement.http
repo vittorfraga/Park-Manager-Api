@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8080/access
-@lisencePlateMotorcycle = "AAAA444"
+@baseUrl = http://localhost:8081/access
+@lisencePlateMotorcycle = "AAAA333"
 @lisencePlateCar = "ABC1235"
 
 
@@ -8,8 +8,8 @@ POST {{baseUrl}}/entry
 Content-Type: application/json
 
 {
-  "establishmentId": 18,
-  "licensePlate": {{lisencePlateCar}}
+  "establishmentId": 19,
+  "licensePlate": {{lisencePlateMotorcycle}}
 }
 
 ### exit
@@ -17,6 +17,6 @@ POST {{baseUrl}}/exit
 Content-Type: application/json
 
 {
-  "establishmentId": 18,
-  "licensePlate": {{lisencePlateCar}}
+  "establishmentId": 19,
+  "licensePlate": {{lisencePlateMotorcycle}}
 }

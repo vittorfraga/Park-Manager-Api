@@ -1,7 +1,7 @@
 package com.vittorfraga.estacionamentoapi.web;
 
-import com.vittorfraga.estacionamentoapi.reports.DetailedReport;
-import com.vittorfraga.estacionamentoapi.reports.ReportsSummary;
+import com.vittorfraga.estacionamentoapi.domain.reports.DetailedReport;
+import com.vittorfraga.estacionamentoapi.domain.reports.ReportsSummary;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

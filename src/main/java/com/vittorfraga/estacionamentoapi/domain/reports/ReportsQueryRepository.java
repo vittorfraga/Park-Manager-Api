@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.reports;
+package com.vittorfraga.estacionamentoapi.domain.reports;
 
 import com.vittorfraga.estacionamentoapi.domain.parkingaccess.VehicleEventType;
 import jakarta.persistence.EntityManager;
@@ -16,7 +16,7 @@ public class ReportsQueryRepository {
     private EntityManager entityManager;
 
     public List<HourlyCount> findCountsPerHour(Long establishmentId, LocalDate day, VehicleEventType eventType) {
-        String queryString = "SELECT NEW com.vittorfraga.estacionamentoapi.reports.HourlyCount(HOUR(eac.createdAt), COUNT(eac)) " +
+        String queryString = "SELECT NEW com.vittorfraga.estacionamentoapi.domain.reports.HourlyCount(HOUR(eac.createdAt), COUNT(eac)) " +
                 "FROM EstablishmentAccessControl eac " +
                 "WHERE eac.establishment.id = :establishmentId " +
                 "AND eac.eventType = :eventType " +
@@ -45,3 +45,4 @@ public class ReportsQueryRepository {
         return Math.toIntExact(query.getSingleResult());
     }
 }
+
