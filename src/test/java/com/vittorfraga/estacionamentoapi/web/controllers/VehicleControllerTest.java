@@ -1,7 +1,11 @@
 package com.vittorfraga.estacionamentoapi.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vittorfraga.estacionamentoapi.domain.vehicle.Vehicle;
+import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleRepository;
+import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleType;
 import com.vittorfraga.estacionamentoapi.usecases.vehicle.dto.VehicleRequest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,6 +14,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -17,8 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@AutoConfigureMockMvc(addFilters = false)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class VehicleControllerTest {
 
     @Autowired
@@ -28,11 +34,16 @@ class VehicleControllerTest {
     ObjectMapper objectMapper;
 
     @Autowired
-    VehicleController vehicleController;
+    private VehicleRepository vehicleRepository;
+
+    @AfterEach
+    void tearDown() {
+        this.vehicleRepository.deleteAll();
+    }
 
     @Test
     void createVehicle() throws Exception {
-        VehicleRequest vehicleRequest = new VehicleRequest("Brand", "Model", "AG24R89", "verde", "CAR");
+        VehicleRequest vehicleRequest = new VehicleRequest("Brand", "Model", "AB24R89", "verde", "CAR");
 
         String jsonInput = objectMapper.writeValueAsString(vehicleRequest);
 
@@ -43,19 +54,23 @@ class VehicleControllerTest {
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.brand").value("Brand"))
                 .andExpect(jsonPath("$.model").value("Model"))
-                .andExpect(jsonPath("$.licensePlate").value("AG24R89"))
+                .andExpect(jsonPath("$.licensePlate").value("AB24R89"))
                 .andExpect(jsonPath("$.color").value("verde"))
                 .andExpect(jsonPath("$.type").value("CAR"));
     }
 
     @Test
     void listVehicles() throws Exception {
-        this.vehicleController.createVehicle(new VehicleRequest("Brand1", "Model1", "AG24R89", "verde", "CAR"));
-        this.vehicleController.createVehicle(new VehicleRequest("Brand2", "Model1", "AG24R87", "verde", "CAR"));
+        Vehicle vehicle1 = new Vehicle("Brand1", "Model1", "AG24R89", "verde", VehicleType.CAR);
+        Vehicle vehicle2 = new Vehicle("Brand2", "Model2", "AG24R90", "verde", VehicleType.CAR);
+        Vehicle vehicle3 = new Vehicle("Brand3", "Model3", "AG24R91", "verde", VehicleType.MOTORCYCLE);
+
+        this.vehicleRepository.saveAll(List.of(vehicle1, vehicle2, vehicle3));
+
 
         mockMvc.perform(get("/vehicles"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content.length()").value(2))
+                .andExpect(jsonPath("$.content.length()").value(3))
                 .andExpect(jsonPath("$.content[0].brand").value("Brand1"))
                 .andExpect(jsonPath("$.content[1].brand").value("Brand2"));
 
@@ -64,7 +79,8 @@ class VehicleControllerTest {
 
     @Test
     void getVehicleByLicensePlate() throws Exception {
-        this.vehicleController.createVehicle(new VehicleRequest("Brand1", "Model1", "AG24R89", "verde", "CAR"));
+        Vehicle vehicle1 = new Vehicle("Brand1", "Model1", "AG24R89", "verde", VehicleType.CAR);
+        this.vehicleRepository.save(vehicle1);
 
         mockMvc.perform(get("/vehicles/AG24R89"))
                 .andExpect(status().isOk())
@@ -77,29 +93,31 @@ class VehicleControllerTest {
 
     @Test
     void updateVehicle() throws Exception {
-        this.vehicleController.createVehicle(new VehicleRequest("Brand1", "Model1", "AG24R89", "verde", "CAR"));
-
-        final var vehicleRequest = new VehicleRequest("Brand1 Updated", "Model2", "AG24R89", "verde", "MOTORCYCLE");
+        Vehicle vehicle1 = new Vehicle("Brand1", "Model1", "AG24R89", "verde", VehicleType.CAR);
+        final var savedVehicle = this.vehicleRepository.save(vehicle1);
+        System.out.println("veiculo salvo: " + savedVehicle);
+        final var vehicleRequest = new VehicleRequest("Brand Updated", "Model2", "AG24R89", "verde", "MOTORCYCLE");
 
         String jsonInput = objectMapper.writeValueAsString(vehicleRequest);
 
-        mockMvc.perform(put("/vehicles/1")
+        mockMvc.perform(put("/vehicles/" + savedVehicle.getId())
                         .contentType("application/json")
                         .content(jsonInput))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.brand").value("Brand1 Updated"))
+                .andExpect(jsonPath("$.brand").value("Brand Updated"))
                 .andExpect(jsonPath("$.model").value("Model2"))
                 .andExpect(jsonPath("$.licensePlate").value("AG24R89"))
                 .andExpect(jsonPath("$.color").value("verde"))
-                .andExpect(jsonPath("$.type").value("MOTORCYCLE"));
+                .andExpect(jsonPath("$.type").value("MOTORCYCLE"))
+                .andDo(result -> System.out.println(result.getResponse().getContentAsString()));
+
     }
 
     @Test
     void deleteVehicleById() throws Exception {
-        this.vehicleController.createVehicle(new VehicleRequest("Brand1", "Model1", "AG24R89", "verde", "CAR"));
-
-        mockMvc.perform(delete("/vehicles/1"))
+        Vehicle vehicle1 = new Vehicle("Brand1", "Model1", "AG24R89", "verde", VehicleType.CAR);
+        final var vehicleSaved = this.vehicleRepository.save(vehicle1);
+        mockMvc.perform(delete("/vehicles/" + vehicleSaved.getId()))
                 .andExpect(status().isNoContent());
-
     }
 }

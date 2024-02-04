@@ -8,12 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class GetVehicleByLicensePlateUseCaseTest {
@@ -23,13 +25,25 @@ class GetVehicleByLicensePlateUseCaseTest {
     @Mock
     private VehicleRepository repository;
 
+    @Mock
+    private CacheManager cacheManager;
+
     @Test
     void givenAnValidLicensePlate_whenCallsGetVehicleByLicensePlate_thenShouldReturnAVehicle() {
         final var vehicleSaved = VehicleTestHelper.createAndSaveVehicle(repository);
+        final var expectedLicensePlate = vehicleSaved.getLicensePlate();
 
-        when(repository.findByLicensePlate(vehicleSaved.getLicensePlate())).thenReturn(java.util.Optional.of(vehicleSaved));
+        Cache cache = mock(Cache.class);
+        when(cacheManager.getCache("vehicleCacheByLicensePlate")).thenReturn(cache); // Fix the stubbing argument
 
-        final var actualVehicle = useCase.execute(vehicleSaved.getLicensePlate());
+        when(cache.get(expectedLicensePlate)).thenReturn(null);
+
+        when(repository.findByLicensePlate(expectedLicensePlate)).thenReturn(java.util.Optional.of(vehicleSaved));
+
+        final var actualVehicle = useCase.execute(expectedLicensePlate);
+
+        verify(cache).get(expectedLicensePlate);
+        verify(cache).put(expectedLicensePlate, actualVehicle);
 
         assertEquals(vehicleSaved.getId(), actualVehicle.getId());
         assertEquals(vehicleSaved.getBrand(), actualVehicle.getBrand());
@@ -44,10 +58,16 @@ class GetVehicleByLicensePlateUseCaseTest {
         final var expectedLicensePlate = "HS5N123L";
         final var expectedErrorMessage = "License plate " + expectedLicensePlate + " not found";
 
+        Cache cache = mock(Cache.class);
+        when(cacheManager.getCache("vehicleCacheByLicensePlate")).thenReturn(cache);
+        when(cache.get(expectedLicensePlate)).thenReturn(null);
+
         when(repository.findByLicensePlate(eq(expectedLicensePlate))).thenReturn(Optional.empty());
 
 
         final var actualException = Assertions.assertThrows(LicensePlateNotFoundException.class, () -> useCase.execute(expectedLicensePlate));
+
+        verify(cache).get(expectedLicensePlate);
 
         assertEquals(expectedErrorMessage, actualException.getMessage());
         assertEquals(actualException.getClass(), LicensePlateNotFoundException.class);
