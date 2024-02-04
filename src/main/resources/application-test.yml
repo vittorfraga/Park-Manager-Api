@@ -10,3 +10,7 @@ spring:
       path: /h2
   flyway:
     enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: update

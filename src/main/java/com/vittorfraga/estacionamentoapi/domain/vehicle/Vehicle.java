@@ -23,6 +23,8 @@ public class Vehicle implements Serializable {
 
     private String brand;
     private String model;
+
+    @Column(name = "licensePlate", unique = true, nullable = false)
     private String licensePlate;
     private String color;
     private VehicleType type;
