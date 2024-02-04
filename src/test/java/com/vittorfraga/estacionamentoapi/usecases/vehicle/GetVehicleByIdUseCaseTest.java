@@ -43,11 +43,11 @@ class GetVehicleByIdUseCaseTest {
 
         final var actualVehicle = useCase.execute(expectedId);
 
-        // Assert caching behavior
+        
         verify(cache).get(expectedId);
         verify(cache).put(expectedId, actualVehicle);
 
-        // Assert vehicle properties
+      
         assertEquals(expectedId, actualVehicle.getId());
         assertEquals(vehicleSaved.getBrand(), actualVehicle.getBrand());
         assertEquals(vehicleSaved.getModel(), actualVehicle.getModel());
