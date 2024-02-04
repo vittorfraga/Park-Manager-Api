@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 
 @Getter
 @Data
@@ -14,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "vehicle")
-public class Vehicle {
+public class Vehicle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

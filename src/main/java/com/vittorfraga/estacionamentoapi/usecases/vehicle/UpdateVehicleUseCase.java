@@ -30,6 +30,8 @@ public class UpdateVehicleUseCase extends UseCase<UpdateVehicleRequest, Vehicle>
 
         final var foundVehicle = this.repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("vehicle", id));
 
+        System.out.println("veiculo encontrado no usecase: " + foundVehicle);
+
         foundVehicle.update(brand, model, plate, color, VehicleType.fromString(type));
 
         return this.repository.save(foundVehicle);

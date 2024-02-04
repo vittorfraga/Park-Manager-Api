@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.config;
+package com.vittorfraga.estacionamentoapi.config.security;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;

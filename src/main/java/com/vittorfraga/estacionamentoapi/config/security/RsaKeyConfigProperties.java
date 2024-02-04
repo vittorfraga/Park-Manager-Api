@@ -1,4 +1,4 @@
-package com.vittorfraga.estacionamentoapi.config;
+package com.vittorfraga.estacionamentoapi.config.security;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

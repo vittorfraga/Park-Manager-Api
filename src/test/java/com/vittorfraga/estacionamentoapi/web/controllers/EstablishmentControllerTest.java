@@ -1,7 +1,10 @@
 package com.vittorfraga.estacionamentoapi.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
+import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentRepository;
 import com.vittorfraga.estacionamentoapi.usecases.establishment.dtos.EstablishmentRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ActiveProfiles("test")
-@AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@AutoConfigureMockMvc(addFilters = false)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class EstablishmentControllerTest {
 
 
@@ -29,7 +32,12 @@ class EstablishmentControllerTest {
     ObjectMapper objectMapper;
 
     @Autowired
-    EstablishmentController establishmentController;
+    private EstablishmentRepository establishmentRepository;
+
+    @BeforeEach
+    void tearDown() {
+        establishmentRepository.deleteAll();
+    }
 
     @Test
     public void testCreateEstablishment() throws Exception {
@@ -55,10 +63,10 @@ class EstablishmentControllerTest {
     @Test
     void listEstablishments() throws Exception {
 
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment2", "12345678901234", "123456789", "Test Address", 2, 10));
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment3", "12345678901234", "123456789", "Test Address", 3, 10));
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment4", "12345678901234", "123456789", "Test Address", 4, 10));
+        this.establishmentRepository.save(new Establishment("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
+        this.establishmentRepository.save(new Establishment("Test Establishment2", "12345678901234", "123456789", "Test Address", 2, 10));
+        this.establishmentRepository.save(new Establishment("Test Establishment3", "12345678901234", "123456789", "Test Address", 3, 10));
+        this.establishmentRepository.save(new Establishment("Test Establishment4", "12345678901234", "123456789", "Test Address", 4, 10));
 
         mockMvc.perform(get("/establishments"))
                 .andExpect(status().isOk())
@@ -72,11 +80,11 @@ class EstablishmentControllerTest {
 
     @Test
     void getEstablishmentById() throws Exception {
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
+        final var savedEstablishment = this.establishmentRepository.save(new Establishment("Test Establishment", "12345678901234", "Test Address", "123456789", 1, 10));
 
-        mockMvc.perform(get("/establishments/1"))
+        mockMvc.perform(get("/establishments/" + savedEstablishment.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Test Establishment1"))
+                .andExpect(jsonPath("$.name").value("Test Establishment"))
                 .andExpect(jsonPath("$.cnpj").value("12345678901234"))
                 .andExpect(jsonPath("$.address").value("Test Address"))
                 .andExpect(jsonPath("$.phone").value("123456789"))
@@ -91,14 +99,14 @@ class EstablishmentControllerTest {
 
     @Test
     void updateEstablishmentById() throws Exception {
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
+        final var savedEstablishment = this.establishmentRepository.save(new Establishment("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
 
         EstablishmentRequest establishmentRequest = new EstablishmentRequest("Establishment Updated", "12345678901211", "123456789", "Test Address Updated", 20, 30);
 
         String jsonInput = objectMapper.writeValueAsString(establishmentRequest);
 
 
-        mockMvc.perform(put("/establishments/1")
+        mockMvc.perform(put("/establishments/" + savedEstablishment.getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonInput))
                 .andExpect(status().isOk())
@@ -112,9 +120,9 @@ class EstablishmentControllerTest {
 
     @Test
     void deleteEstablishmentById() throws Exception {
-        this.establishmentController.createEstablishment(new EstablishmentRequest("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
+        final var savedEstablishment = this.establishmentRepository.save(new Establishment("Test Establishment1", "12345678901234", "123456789", "Test Address", 1, 10));
 
-        mockMvc.perform(delete("/establishments/1"))
+        mockMvc.perform(delete("/establishments/" + savedEstablishment.getId()))
                 .andExpect(status().isNoContent());
     }
 }

@@ -1,8 +1,11 @@
 @base_url = http://localhost:8081/establishments
+@token = eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoicGVkcm8iLCJleHAiOjE3MDY5NzExMzYsImlhdCI6MTcwNjkzNTEzNiwic2NvcGUiOiIifQ.kAPH_wrD2pY_xc6D-Ct1EuYfGa85wgF2V0hGfx3o8RMk2bnZlZN6d5p-4m_f0P8523Qt7F2K7GkwwvKU94RMpFBQsNg14rvnSm-b1YvITlT9CdbDHop2JbnVjCos5DSX6lg89NiHxQquCy4M54H5DbzpmcjsR3vC_JO5WO3K9oWkPKCKOuhIdCUM_k7tZunlDA2-KScCUJU0xWha8UYufBPvReRJQcbuXJ5JlAfPMq3iR1w5rf0l4N47Oem_hQCabvJd2CZFoo6LP_1ho74Otw6GmYfNhgiDaJfpcd88e4_16l1zoKh3rhlINEtDbFYVanlyM4f0NUdJTNvrHt5r0Q
+
 
 ### CREATE A NEW ESTABLISHMENT
 POST {{base_url}}
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "estabelecimento",
@@ -14,14 +17,18 @@ Content-Type: application/json
 }
 
 ### GET AN ESTABLISHMENT BY ID
-GET {{base_url}}/19
+GET {{base_url}}/2000
+Authorization: Bearer {{token}}
+
 
 ### GET ALL ESTABLISHMENTS
 GET {{base_url}}
 
 ### UPDATE AN ESTABLISHMENT
-PUT {{base_url}}/1
+PUT {{base_url}}/2000
 Content-Type: application/json
+Authorization: Bearer {{token}}
+
 
 {
   "name": "name updated",
