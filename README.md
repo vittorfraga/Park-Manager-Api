@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-O desafio é um backend de um sistema de gerenciamento de estacionamento, baseado no [desafio de backend da FCamara](https://github.com/fcamarasantos/backend-test-java), construído com foco em permitir a criação, edição e listagem de estabelecimentos e veiculos, entrada e saída de veículos de um estabelecimento, bem com gerar relatórios sobre as entradas e saídas e autenticação de usuários.
+O desafio é o backend de um sistema de gerenciamento de estacionamento, baseado no [desafio de backend da FCamara](https://github.com/fcamarasantos/backend-test-java), construído com foco em permitir a criação, edição e listagem de estabelecimentos e veiculos, entrada e saída de veículos de um estabelecimento, bem com gerar relatórios sobre as entradas e saídas e autenticação de usuários.
 
 ## Tecnologias Usadas
 
