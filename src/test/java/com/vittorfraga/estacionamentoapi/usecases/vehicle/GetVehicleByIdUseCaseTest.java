@@ -34,7 +34,7 @@ class GetVehicleByIdUseCaseTest {
         final var vehicleSaved = VehicleTestHelper.createAndSaveVehicle(repository);
         final var expectedId = vehicleSaved.getId();
 
-        // Mocking cache behavior
+   
         Cache cache = mock(Cache.class);
         when(cacheManager.getCache("vehicleCache")).thenReturn(cache);
         when(cache.get(expectedId)).thenReturn(null);
