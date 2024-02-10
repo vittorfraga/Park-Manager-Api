@@ -115,4 +115,30 @@ class VehicleTest {
         Assertions.assertEquals(expectedType, actualVehicle.getType());
     }
 
+    @Test
+    void givenNullParams_whenCallUpdate_thenShouldKeepCurrentValues() {
+        final var originalBrand = "Original Brand";
+        final var originalModel = "Original Model";
+        final var originalColor = "Original Color";
+        final var originalLicensePlate = "Original LicensePlate";
+        final var originalType = VehicleType.CAR;
+
+        final var actualVehicle = new VehicleBuilder()
+                .withBrand(originalBrand)
+                .withModel(originalModel)
+                .withLicensePlate(originalLicensePlate)
+                .withColor(originalColor)
+                .withType(originalType)
+                .build();
+
+        actualVehicle.update(null, null, null, null, null);
+
+
+        Assertions.assertEquals(originalBrand, actualVehicle.getBrand());
+        Assertions.assertEquals(originalModel, actualVehicle.getModel());
+        Assertions.assertEquals(originalLicensePlate, actualVehicle.getLicensePlate());
+        Assertions.assertEquals(originalColor, actualVehicle.getColor());
+        Assertions.assertEquals(originalType, actualVehicle.getType());
+    }
+
 }

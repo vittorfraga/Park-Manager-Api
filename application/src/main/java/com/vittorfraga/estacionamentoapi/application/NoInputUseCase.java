@@ -1,5 +1,5 @@
 package com.vittorfraga.estacionamentoapi.application;
 
-public interface NullaryUseCase<Output> {
+public interface NoInputUseCase<Output> {
     Output execute();
 }

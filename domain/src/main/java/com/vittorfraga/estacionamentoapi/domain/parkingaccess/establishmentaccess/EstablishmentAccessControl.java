@@ -1,5 +1,7 @@
 package com.vittorfraga.estacionamentoapi.domain.parkingaccess.establishmentaccess;
 
+import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleType;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -10,11 +12,11 @@ public class EstablishmentAccessControl {
     private String vehicleLicensePlate;
     private String establishmentId;
     private VehicleEventType eventType;
-    private String vehicleType;
+    private VehicleType vehicleType;
     private LocalDateTime createdAt;
 
 
-    private EstablishmentAccessControl(String id, String vehicleLicensePlate, String establishmentId, VehicleEventType eventType, String vehicleType) {
+    private EstablishmentAccessControl(String id, String vehicleLicensePlate, String establishmentId, VehicleEventType eventType, VehicleType vehicleType) {
         this.id = id;
         this.vehicleLicensePlate = vehicleLicensePlate;
         this.establishmentId = establishmentId;
@@ -27,7 +29,7 @@ public class EstablishmentAccessControl {
             final String vehicleLicensePlate,
             final String establishmentId,
             final VehicleEventType eventType,
-            final String vehicleType) {
+            final VehicleType vehicleType) {
         return new EstablishmentAccessControl(
                 UUID.randomUUID().toString(),
                 vehicleLicensePlate,
@@ -41,7 +43,7 @@ public class EstablishmentAccessControl {
             final String vehicleLicensePlate,
             final String establishmentId,
             final VehicleEventType eventType,
-            final String vehicleType) {
+            final VehicleType vehicleType) {
         return new EstablishmentAccessControl(
                 id,
                 vehicleLicensePlate,
@@ -66,11 +68,13 @@ public class EstablishmentAccessControl {
         return eventType;
     }
 
-    public String getVehicleType() {
+    public VehicleType getVehicleType() {
         return vehicleType;
     }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
+
 }

@@ -66,8 +66,7 @@ class GetEstablishmentByIdUseCaseImplTest {
         when(gateway.findById(eq(expectedId))).thenReturn(Optional.empty());
 
         final var Input = new GetEstablishmentByIdInput(expectedId);
-
-
+        
         final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(Input));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());

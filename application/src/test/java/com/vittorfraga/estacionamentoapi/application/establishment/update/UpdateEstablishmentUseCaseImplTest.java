@@ -80,13 +80,18 @@ class UpdateEstablishmentUseCaseImplTest {
         final var expectedMotorcycleSlots = 20;
         final var expectedCarSlots = 30;
         final var expectedId = anEstablishment.getId();
+        final var expectedErrorMessage = "name must be between 3 and 255 characters";
 
         final var Input = UpdateEstablishmentInput.createInput(expectedId, expectedName, expectedCNPJ, expectedAddress, expectedPhone, expectedMotorcycleSlots, expectedCarSlots);
 
         when(gateway.findById(Mockito.eq(expectedId))).thenReturn(Optional.of(anEstablishment.clone()));
 
-        Assertions.assertThrows(DomainException.class, () -> useCase.execute(Input));
+        final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(Input));
+
+
         Mockito.verify(gateway, times(0)).update(any());
+        Mockito.verify(gateway, times(1)).findById(eq(expectedId));
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
 
     }
 

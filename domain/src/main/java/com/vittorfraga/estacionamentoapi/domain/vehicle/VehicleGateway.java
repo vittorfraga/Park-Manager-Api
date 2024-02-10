@@ -10,6 +10,10 @@ public interface VehicleGateway {
 
     Optional<Vehicle> findById(String anId);
 
+    Optional<Vehicle> findByLicensePlate(String anId);
+
+    boolean existsById(String anId);
+
     List<Vehicle> findAll();
 
     void deleteById(String anId);

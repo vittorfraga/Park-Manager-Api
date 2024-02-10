@@ -3,4 +3,6 @@ package com.vittorfraga.estacionamentoapi.domain.parkingaccess.establishmentSlot
 public interface EstablishmentSlotsManagerGateway {
 
     EstablishmentSlotsManager findByEstablishmentId(String establishmentId);
+
+    void save(EstablishmentSlotsManager slotsManager);
 }

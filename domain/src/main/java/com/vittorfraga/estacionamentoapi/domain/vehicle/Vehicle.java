@@ -1,11 +1,10 @@
 package com.vittorfraga.estacionamentoapi.domain.vehicle;
 
 
-import java.io.Serializable;
 import java.util.UUID;
 
 
-public class Vehicle implements Serializable {
+public class Vehicle implements Cloneable {
 
     private String id;
     private String brand;
@@ -91,5 +90,26 @@ public class Vehicle implements Serializable {
 
     public VehicleType getType() {
         return type;
+    }
+
+    @Override
+    public Vehicle clone() {
+        try {
+            return (Vehicle) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "id='" + id + '\'' +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", color='" + color + '\'' +
+                ", type=" + type +
+                '}';
     }
 }
