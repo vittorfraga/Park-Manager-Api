@@ -19,4 +19,4 @@ jobs:
           cache: gradle
       - name: Run tests with Gradle
         run: |
-          ./gradlew :domain:test :application:test -x :src:test --no-daemon
+          ./gradlew :domain:test :application:test --no-daemon
