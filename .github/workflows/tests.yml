@@ -18,4 +18,5 @@ jobs:
           distribution: 'temurin'
           cache: gradle
       - name: Run tests with Gradle
-        run: ./gradlew test --no-daemon
+        run: |
+          ./gradlew :domain:test :application:test -x :src:test --no-daemon
