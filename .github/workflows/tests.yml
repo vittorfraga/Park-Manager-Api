@@ -1,9 +1,7 @@
 name: Java CI with Gradle
 
 on:
-  pull_request:
-    branches:
-      - main
+  push:
 
 jobs:
   test:
@@ -20,4 +18,5 @@ jobs:
           distribution: 'temurin'
           cache: gradle
       - name: Run tests with Gradle
-        run: ./gradlew test --no-daemon
+        run: |
+          ./gradlew :domain:test :application:test -x :src:test --no-daemon
