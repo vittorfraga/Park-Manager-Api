@@ -2,8 +2,6 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches-ignore:
-      - '*'
 
 jobs:
   test:
@@ -21,4 +19,3 @@ jobs:
           cache: gradle
       - name: Run tests with Gradle
         run: ./gradlew test --no-daemon
-
