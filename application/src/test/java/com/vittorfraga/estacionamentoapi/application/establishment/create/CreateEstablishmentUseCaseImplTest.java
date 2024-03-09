@@ -1,7 +1,6 @@
 package com.vittorfraga.estacionamentoapi.application.establishment.create;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

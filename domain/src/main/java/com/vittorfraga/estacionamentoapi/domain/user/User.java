@@ -1,11 +1,13 @@
 package com.vittorfraga.estacionamentoapi.domain.user;
 
 
+import com.vittorfraga.estacionamentoapi.domain.validation.ValidationHandler;
+
 import java.util.UUID;
 
 public class User {
 
-    private String id;
+    private final String id;
     private String username;
     private String password;
     private String name;
@@ -17,7 +19,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.email = email;
-        UserValidator.validateUserFields(this);
+
     }
 
     public static User builder(
@@ -63,8 +65,12 @@ public class User {
         this.password = (password != null) ? password : this.password;
         this.name = (name != null) ? name : this.name;
         this.email = (email != null) ? email : this.email;
-        UserValidator.validateUserFields(this);
+
         return this;
+    }
+
+    public void validate(final ValidationHandler handler) {
+        new UserValidator(this, handler).validate();
     }
 
     @Override

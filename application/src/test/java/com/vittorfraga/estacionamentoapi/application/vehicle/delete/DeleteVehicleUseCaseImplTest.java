@@ -1,6 +1,5 @@
 package com.vittorfraga.estacionamentoapi.application.vehicle.delete;
 
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.vehicle.Vehicle;
 import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleGateway;
 import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleType;

@@ -1,5 +1,7 @@
 package com.vittorfraga.estacionamentoapi.domain.establishment;
 
+import com.vittorfraga.estacionamentoapi.domain.validation.handler.ThrowsValidationHandler;
+
 public class EstablishmentBuilder {
     private String name = "Establishment";
     private String cnpj = "12345678901234";
@@ -39,6 +41,8 @@ public class EstablishmentBuilder {
     }
 
     public Establishment build() {
-        return Establishment.builder(name, cnpj, address, phone, motorCycleSlots, carSlots);
+        Establishment establishment = Establishment.builder(name, cnpj, address, phone, motorCycleSlots, carSlots);
+        establishment.validate(new ThrowsValidationHandler());
+        return establishment;
     }
 }

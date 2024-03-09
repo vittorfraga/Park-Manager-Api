@@ -19,8 +19,8 @@ class UserTest {
 
         final var actualUser = User.builder(expectedUsername, expectedPassword, expectedName, expectedEmail);
 
-        Assertions.assertNotNull(actualUser);
-        Assertions.assertNotNull(actualUser.getId());
+        assertNotNull(actualUser);
+        assertNotNull(actualUser.getId());
         assertEquals(expectedUsername, actualUser.getUsername());
         assertEquals(expectedPassword, actualUser.getPassword());
         assertEquals(expectedName, actualUser.getName());
@@ -30,146 +30,149 @@ class UserTest {
     @Test
     void givenNullUsername_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "username can not be null";
-        final var expectedFieldName = "username";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withUsername(null);
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenEmptyUsername_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "username can not be empty";
-        final var expectedFieldName = "username";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withUsername("");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenNullPassword_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "password can not be null";
-        final var expectedFieldName = "password";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withPassword(null);
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenEmptyPassword_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "password can not be empty";
-        final var expectedFieldName = "password";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withPassword("");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenAnInvalidEmail_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "invalid email format";
+        final var expectedErrorCount = 1;
+
 
         UserBuilder builder = new UserBuilder().withEmail("invalid-email");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenInvalidShortUsernameLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "username must be between 6 and 18 characters";
-        final var expectedFieldName = "username";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withUsername("us");
         System.out.println(builder);
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenInvalidLongUsernameLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "username must be between 6 and 18 characters";
-        final var expectedFieldName = "username";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withUsername("usertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertestusertest");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenInvalidShortPasswordLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "password must be between 6 and 100 characters";
-        final var expectedFieldName = "password";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withPassword("12345");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenInvalidLongPasswordLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "password must be between 6 and 100 characters";
-        final var expectedFieldName = "password";
+        final var expectedErrorCount = 1;
         final var longPassword = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678903456789012345678901234567890123456";
 
         UserBuilder builder = new UserBuilder().withPassword(longPassword);
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
 
     }
 
     @Test
     void givenInvalidShortNameLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "name must be between 3 and 30 characters";
-        final var expectedFieldName = "name";
+        final var expectedErrorCount = 1;
 
         UserBuilder builder = new UserBuilder().withName("Us");
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenInvalidLongNameLength_whenCallNewUser_thenShouldThrowException() {
         final var expectedErrorMessage = "name must be between 3 and 30 characters";
-        final var expectedFieldName = "name";
+        final var expectedErrorCount = 1;
         final var longName = "fjsodifjsdfjsfijsdidfdsfdsfsdffjsdofijsdofijsdoifjsoidfjosidjfi";
 
         UserBuilder builder = new UserBuilder().withName(longName);
 
-        final var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        assertEquals(expectedErrorMessage, exception.getMessage());
-        assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
@@ -205,4 +208,6 @@ class UserTest {
 
         assertNotNull(actualVehicle.getUsername());
     }
+
+
 }

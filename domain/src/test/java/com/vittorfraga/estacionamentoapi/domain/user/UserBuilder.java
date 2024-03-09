@@ -1,5 +1,7 @@
 package com.vittorfraga.estacionamentoapi.domain.user;
 
+import com.vittorfraga.estacionamentoapi.domain.validation.handler.ThrowsValidationHandler;
+
 public class UserBuilder {
     private String username = "userteste";
     private String password = "123456";
@@ -28,8 +30,11 @@ public class UserBuilder {
     }
 
     public User build() {
-        return User.builder(username, password, name, email);
+        User user = User.builder(username, password, name, email);
+        user.validate(new ThrowsValidationHandler());
+        return user;
     }
+
 
     @Override
     public String toString() {

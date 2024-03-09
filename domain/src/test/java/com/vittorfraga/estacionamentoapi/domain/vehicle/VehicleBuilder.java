@@ -1,5 +1,7 @@
 package com.vittorfraga.estacionamentoapi.domain.vehicle;
 
+import com.vittorfraga.estacionamentoapi.domain.validation.handler.ThrowsValidationHandler;
+
 public class VehicleBuilder {
     private String brand = "Brand";
     private String model = "Model";
@@ -33,6 +35,8 @@ public class VehicleBuilder {
     }
 
     public Vehicle build() {
-        return Vehicle.builder(brand, model, licensePlate, color, type);
+        Vehicle vehicle = Vehicle.builder(brand, model, licensePlate, color, type);
+        vehicle.validate(new ThrowsValidationHandler());
+        return vehicle;
     }
 }

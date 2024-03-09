@@ -2,7 +2,6 @@ package com.vittorfraga.estacionamentoapi.application.establishment.delete;
 
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -25,5 +24,5 @@ public class DeleteEstablishmentUseCaseImpl implements DeleteEstablishmentUseCas
     private static Supplier<DomainException> notFound(String anId) {
         return () -> new DomainException("Establishment", "with ID " + anId + " was not found");
     }
-    
+
 }

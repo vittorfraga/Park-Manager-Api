@@ -1,12 +1,13 @@
 package com.vittorfraga.estacionamentoapi.domain.user;
 
-import com.vittorfraga.estacionamentoapi.domain.Validator;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
+import com.vittorfraga.estacionamentoapi.domain.validation.Error;
+import com.vittorfraga.estacionamentoapi.domain.validation.ValidationHandler;
+import com.vittorfraga.estacionamentoapi.domain.validation.Validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class UserValidator {
+public class UserValidator extends Validator {
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 
@@ -17,30 +18,36 @@ public class UserValidator {
     private static final int NAME_MIN_LENGTH = 3;
     private static final int NAME_MAX_LENGTH = 30;
 
-    public static void validateUserFields(User user) {
-        Validator.validateNotNullOrBlank(user.getUsername(), "username");
-        Validator.validateNotNullOrBlank(user.getPassword(), "password");
-        Validator.validateNotNullOrBlank(user.getName(), "name");
-        Validator.validateNotNullOrBlank(user.getEmail(), "email");
 
-        validateEmail(user.getEmail());
+    private final User user;
 
-        validateLength(user.getUsername(), "username", USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH);
-        validateLength(user.getPassword(), "password", PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
-        validateLength(user.getName(), "name", NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+    protected UserValidator(final User anUser, final ValidationHandler aHandler) {
+        super(aHandler);
+        this.user = anUser;
     }
 
-    private static void validateEmail(String email) {
+    @Override
+    public void validate() {
+        validateNotNullOrBlank(this.user.getUsername(), "username");
+        validateNotNullOrBlank(this.user.getPassword(), "password");
+        validateNotNullOrBlank(this.user.getName(), "name");
+        validateNotNullOrBlank(this.user.getEmail(), "email");
+
+        validateEmail(this.user.getEmail());
+
+        validateLength(this.user.getUsername(), "username", USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH);
+        validateLength(this.user.getPassword(), "password", PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH);
+        validateLength(this.user.getName(), "name", NAME_MIN_LENGTH, NAME_MAX_LENGTH);
+    }
+
+
+    private void validateEmail(String email) {
         Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            throw new DomainException("invalid email format");
+            this.validationHandler().append(new Error(("invalid email format")));
         }
     }
 
-    private static void validateLength(String value, String fieldName, int minLength, int maxLength) {
-        if (value.length() < minLength || value.length() > maxLength) {
-            throw new DomainException(fieldName, String.format("must be between %d and %d characters", minLength, maxLength));
-        }
-    }
+
 }

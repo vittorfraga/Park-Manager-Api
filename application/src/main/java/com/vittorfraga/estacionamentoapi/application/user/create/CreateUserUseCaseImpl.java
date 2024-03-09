@@ -1,6 +1,5 @@
 package com.vittorfraga.estacionamentoapi.application.user.create;
 
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.user.User;
 import com.vittorfraga.estacionamentoapi.domain.user.UserGateway;
 

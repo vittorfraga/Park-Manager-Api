@@ -4,7 +4,6 @@ import com.vittorfraga.estacionamentoapi.application.establishment.retrieve.get.
 import com.vittorfraga.estacionamentoapi.application.establishment.retrieve.get.GetEstablishmentByIdUseCaseImpl;
 import com.vittorfraga.estacionamentoapi.application.vehicle.retrieve.getByLicensePlate.GetVehicleByLicensePlateUseCaseImpl;
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.exceptions.NoAvailableSlotsException;
 import com.vittorfraga.estacionamentoapi.domain.parkingaccess.establishmentSlotManager.EstablishmentSlotsManager;
 import com.vittorfraga.estacionamentoapi.domain.parkingaccess.establishmentSlotManager.EstablishmentSlotsManagerGateway;
@@ -60,7 +59,7 @@ public class EntryVehicleUseCaseImpl implements EntryVehicleUseCase {
         //check if there are available slots for the vehicle type
         checkAvailableSlots(slotsManager, vehicle.getType());
 
-        //create a new register for access control for the vehicle
+        //create a new entry register for access control for the vehicle
         EstablishmentAccessControl newAccessControl = EstablishmentAccessControl.builder(
                 establishment.getId(),
                 vehicle.getLicensePlate(),
@@ -85,11 +84,11 @@ public class EntryVehicleUseCaseImpl implements EntryVehicleUseCase {
 
     //this method checks if there are available slots giving the vehicle type and the slot manager
     private void checkAvailableSlots(EstablishmentSlotsManager slotsManager, VehicleType vehicleType) {
-        int currentOccupiedSlots = (vehicleType == VehicleType.CAR) ?
-                slotsManager.getCurrentOccupiedCarSlots() : slotsManager.getCurrentOccupiedMotorcycleSlots();
+        boolean isCar = vehicleType == VehicleType.CAR;
+        int currentOccupiedSlots = isCar ? slotsManager.getCurrentOccupiedCarSlots() : slotsManager.getCurrentOccupiedMotorcycleSlots();
+        int maxSlots = isCar ? slotsManager.getCarSlots() : slotsManager.getMotorcycleSlots();
 
-        if (currentOccupiedSlots >= ((vehicleType == VehicleType.CAR) ?
-                slotsManager.getCarSlots() : slotsManager.getMotorcycleSlots())) {
+        if (currentOccupiedSlots >= maxSlots) {
             throw new NoAvailableSlotsException(vehicleType);
         }
     }

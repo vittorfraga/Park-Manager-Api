@@ -3,7 +3,6 @@ package com.vittorfraga.estacionamentoapi.application.establishment.update;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 
 import java.util.Objects;
 import java.util.function.Supplier;

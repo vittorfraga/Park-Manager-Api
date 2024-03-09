@@ -2,7 +2,6 @@ package com.vittorfraga.estacionamentoapi.application.establishment.delete;
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ class DeleteEstablishmentUseCaseImplTest {
         final var expectedId = anEstablishment.getId();
 
         when(gateway.findById(eq(expectedId))).thenReturn(Optional.of(anEstablishment));
-        
+
         doNothing().when(gateway).delete(eq(expectedId));
 
         final var Input = new DeleteEstablishmentInput(expectedId);

@@ -1,12 +1,14 @@
 package com.vittorfraga.estacionamentoapi.domain.vehicle;
 
 
+import com.vittorfraga.estacionamentoapi.domain.validation.ValidationHandler;
+
 import java.util.UUID;
 
 
 public class Vehicle implements Cloneable {
 
-    private String id;
+    private final String id;
     private String brand;
     private String model;
     private String licensePlate;
@@ -20,7 +22,6 @@ public class Vehicle implements Cloneable {
         this.licensePlate = licensePlate;
         this.color = color;
         this.type = type;
-        VehicleValidator.validateVehicleFields(this);
 
     }
 
@@ -63,8 +64,11 @@ public class Vehicle implements Cloneable {
         this.color = (color != null) ? color : this.color;
         this.type = (type != null) ? type : this.type;
 
-        VehicleValidator.validateVehicleFields(this);
         return this;
+    }
+
+    public void validate(final ValidationHandler handler) {
+        new VehicleValidator(this, handler).validate();
     }
 
 

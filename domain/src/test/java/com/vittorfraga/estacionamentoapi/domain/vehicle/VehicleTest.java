@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class VehicleTest {
+
     @Test
     void givenValidParams_whenCallNewVehicle_thenShouldCreateNewVehicle() {
         final var actualVehicle = new VehicleBuilder().build();
@@ -20,80 +21,80 @@ class VehicleTest {
     @Test
     void givenNullBrand_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "brand can not be null";
-        var expectedFieldName = "brand";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withBrand(null);
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
 
     }
 
     @Test
     void givenEmptyBrand_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "brand can not be empty";
-        var expectedFieldName = "brand";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withBrand("");
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenNullModel_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "model can not be null";
-        var expectedFieldName = "model";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withModel(null);
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenNullColor_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "color can not be null";
-        var expectedFieldName = "color";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withColor(null);
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenNullLicensePlate_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "licensePlate can not be null";
-        var expectedFieldName = "licensePlate";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withLicensePlate(null);
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
     @Test
     void givenNullType_whenCallNewVehicle_thenShouldThrowException() {
         var expectedErrorMessage = "type can not be null";
-        var expectedFieldName = "type";
+        final var expectedErrorCount = 1;
 
         VehicleBuilder builder = new VehicleBuilder().withType(null);
 
-        var exception = Assertions.assertThrows(DomainException.class, builder::build);
+        final var actualException = Assertions.assertThrows(DomainException.class, builder::build);
 
-        Assertions.assertEquals(expectedErrorMessage, exception.getMessage());
-        Assertions.assertEquals(expectedFieldName, exception.getFieldName());
+        Assertions.assertEquals(expectedErrorMessage, actualException.getErrors().getFirst().message());
+        Assertions.assertEquals(expectedErrorCount, actualException.getErrors().size());
     }
 
 
@@ -140,5 +141,6 @@ class VehicleTest {
         Assertions.assertEquals(originalColor, actualVehicle.getColor());
         Assertions.assertEquals(originalType, actualVehicle.getType());
     }
+
 
 }

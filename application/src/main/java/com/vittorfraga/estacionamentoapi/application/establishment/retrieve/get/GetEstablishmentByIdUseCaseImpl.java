@@ -2,7 +2,6 @@ package com.vittorfraga.estacionamentoapi.application.establishment.retrieve.get
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -15,7 +14,7 @@ public class GetEstablishmentByIdUseCaseImpl implements GetEstablishmentByIdUseC
     public GetEstablishmentByIdUseCaseImpl(final EstablishmentGateway gateway) {
         this.gateway = Objects.requireNonNull(gateway, "gateway should not be null");
     }
-    
+
     @Override
     public Establishment execute(GetEstablishmentByIdInput anInput) {
 

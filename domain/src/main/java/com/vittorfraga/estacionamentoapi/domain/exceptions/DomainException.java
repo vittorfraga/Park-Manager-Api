@@ -1,20 +1,27 @@
 package com.vittorfraga.estacionamentoapi.domain.exceptions;
 
-public class DomainException extends RuntimeException {
+import com.vittorfraga.estacionamentoapi.domain.validation.Error;
 
-    private final String fieldName;
+import java.util.List;
 
-    public DomainException(String fieldName, String message) {
-        super(fieldName + " " + message);
-        this.fieldName = fieldName;
+public class DomainException extends NoStacktraceException {
+
+    private final List<Error> errors;
+
+    private DomainException(final String aMessage, final List<Error> anErrors) {
+        super(aMessage);
+        this.errors = anErrors;
     }
 
-    public DomainException(String message) {
-        super(message);
-        this.fieldName = "";
+    public static DomainException with(final Error anError) {
+        return new DomainException(anError.message(), List.of(anError));
     }
 
-    public String getFieldName() {
-        return fieldName;
+    public static DomainException with(final List<Error> anErrors) {
+        return new DomainException("", anErrors);
+    }
+
+    public List<Error> getErrors() {
+        return errors;
     }
 }

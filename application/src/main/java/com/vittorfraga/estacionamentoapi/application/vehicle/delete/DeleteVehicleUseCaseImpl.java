@@ -1,7 +1,6 @@
 package com.vittorfraga.estacionamentoapi.application.vehicle.delete;
 
 
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import com.vittorfraga.estacionamentoapi.domain.vehicle.VehicleGateway;
 
 import java.util.Objects;
@@ -18,7 +17,7 @@ public class DeleteVehicleUseCaseImpl implements DeleteVehicleUseCase {
 
     @Override
     public void execute(String anId) {
-        
+
         if (!gateway.existsById(anId)) {
             throw notFound(anId).get();
         }

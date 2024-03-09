@@ -1,6 +1,8 @@
 package com.vittorfraga.estacionamentoapi.domain.establishment;
 
 
+import com.vittorfraga.estacionamentoapi.domain.validation.ValidationHandler;
+
 import java.util.Objects;
 import java.util.UUID;
 
@@ -23,7 +25,6 @@ public class Establishment implements Cloneable {
         this.phone = phone;
         this.motorcycleSlots = motorcycleSlots;
         this.carSlots = carSlots;
-        EstablishmentValidator.validateEstablishmentFields(this);
     }
 
     //when instantiating a new establishment, the id is generated automatically
@@ -74,7 +75,6 @@ public class Establishment implements Cloneable {
         this.phone = (aPhone != null) ? aPhone : this.phone;
         this.motorcycleSlots = (aMotorcycleSlots != null) ? aMotorcycleSlots : this.motorcycleSlots;
         this.carSlots = (aCarSlots != null) ? aCarSlots : this.carSlots;
-        EstablishmentValidator.validateEstablishmentFields(this);
         return this;
     }
 
@@ -119,6 +119,10 @@ public class Establishment implements Cloneable {
                 ", motorcycleSlots=" + motorcycleSlots +
                 ", carSlots=" + carSlots +
                 '}';
+    }
+
+    public void validate(final ValidationHandler handler) {
+        new EstablishmentValidator(this, handler).validate();
     }
 
     @Override

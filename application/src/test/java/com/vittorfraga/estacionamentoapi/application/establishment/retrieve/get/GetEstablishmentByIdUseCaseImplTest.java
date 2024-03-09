@@ -2,7 +2,6 @@ package com.vittorfraga.estacionamentoapi.application.establishment.retrieve.get
 
 import com.vittorfraga.estacionamentoapi.domain.establishment.Establishment;
 import com.vittorfraga.estacionamentoapi.domain.establishment.EstablishmentGateway;
-import com.vittorfraga.estacionamentoapi.domain.exceptions.DomainException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +65,7 @@ class GetEstablishmentByIdUseCaseImplTest {
         when(gateway.findById(eq(expectedId))).thenReturn(Optional.empty());
 
         final var Input = new GetEstablishmentByIdInput(expectedId);
-        
+
         final var actualException = Assertions.assertThrows(DomainException.class, () -> useCase.execute(Input));
 
         Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
